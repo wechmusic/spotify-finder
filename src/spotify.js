@@ -37,12 +37,16 @@ async function getAccessToken() {
  * Extract Spotify track ID from various URL formats
  * Supports:
  * - https://open.spotify.com/track/ID
+ * - https://open.spotify.com/intl-tr/track/ID (removes intl-XX)
  * - https://open.spotify.com/track/ID?si=...
  * - spotify:track:ID
  * - Just the ID itself
  */
 function extractTrackId(input) {
   if (!input) return null;
+
+  // Remove intl-XX language codes from URL
+  input = input.replace(/\/intl-[a-z]{2}\//gi, '/');
 
   // spotify:track:ID format
   const uriMatch = input.match(/spotify:track:([a-zA-Z0-9]+)/);
