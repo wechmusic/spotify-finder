@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Spotify şarkılarının dağıtımcısını anında öğren. ISRC, UPC ve label bilgilerinden distributor tespiti.">
+    <meta name="keywords" content="spotify, distributor, music distribution, distrokid, tunecore, isrc, upc">
+    <meta property="og:title" content="Spotify Distributor Finder">
+    <meta property="og:description" content="Herhangi bir Spotify şarkısının dağıtımcısını öğren">
+    <meta property="og:type" content="website">
+    <title>🎵 Spotify Distributor Finder</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <span class="logo-icon">🎵</span>
+                <h1>Spotify Distributor Finder</h1>
+            </div>
+            <p class="subtitle">Herhangi bir Spotify şarkısının dağıtımcısını öğren</p>
+        </header>
+
+        <main class="main-content">
+            <div class="search-section">
+                <form id="searchForm" class="search-form">
+                    <div class="input-group">
+                        <input 
+                            type="text" 
+                            id="trackInput" 
+                            class="track-input" 
+                            placeholder="Spotify track linki veya ID'si girin..."
+                            required
+                        >
+                        <button type="submit" class="search-button" id="searchButton">
+                            <span class="button-text">Analiz Et</span>
+                            <span class="button-loading" style="display: none;">
+                                <span class="spinner"></span>
+                                Analiz ediliyor...
+                            </span>
+                        </button>
+                    </div>
+                    <p class="input-hint">
+                        Örnek: https://open.spotify.com/track/4iV5W9uYEdYUVa79Axb7Rh
+                    </p>
+                </form>
+
+                <!-- Error Message -->
+                <div id="errorMessage" class="error-message" style="display: none;">
+                    <span class="error-icon">⚠️</span>
+                    <span id="errorText"></span>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div id="resultsSection" class="results-section" style="display: none;">
+                <div class="result-card">
+                    <div class="track-header">
+                        <img id="albumImage" class="album-image" src="" alt="Album cover">
+                        <div class="track-info">
+                            <h2 id="trackName" class="track-name"></h2>
+                            <p id="artistName" class="artist-name"></p>
+                            <p id="albumName" class="album-name"></p>
+                        </div>
+                    </div>
+
+                    <div class="track-details">
+                        <div class="detail-grid">
+                            <div class="detail-item">
+                                <span class="detail-label">🔍 ISRC</span>
+                                <span id="isrc" class="detail-value"></span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">💎 UPC</span>
+                                <span id="upc" class="detail-value"></span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">🏷️ Label</span>
+                                <span id="label" class="detail-value"></span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">📅 Çıkış Tarihi</span>
+                                <span id="releaseDate" class="detail-value"></span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">⏱️ Süre</span>
+                                <span id="duration" class="detail-value"></span>
+                            </div>
+                            <div class="detail-item">
+                                <a id="spotifyLink" href="#" target="_blank" class="spotify-link">
+                                    🎧 Spotify'da Aç
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="distributorResult" class="distributor-result">
+                        <div class="distributor-header">
+                            <span id="distributorEmoji" class="distributor-emoji"></span>
+                            <span id="distributorName" class="distributor-name"></span>
+                        </div>
+                        <div class="confidence-badge">
+                            <span id="confidenceBadge" class="badge"></span>
+                            <span id="methodText" class="method-text"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features Section -->
+            <div class="features-section">
+                <h3>✨ Özellikler</h3>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <span class="feature-icon">🎯</span>
+                        <h4>Yüksek Doğruluk</h4>
+                        <p>ISRC, UPC ve label bilgilerinden çoklu analiz</p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-icon">⚡</span>
+                        <h4>Hızlı Sonuç</h4>
+                        <p>Saniyeler içinde detaylı analiz</p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-icon">🌍</span>
+                        <h4>Geniş Kapsam</h4>
+                        <p>20+ farklı distributor desteği</p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-icon">🔒</span>
+                        <h4>Güvenli</h4>
+                        <p>Hiçbir veri saklanmaz</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Supported Distributors -->
+            <div class="distributors-section">
+                <h3>📦 Desteklenen Dağıtımcılar</h3>
+                <div class="distributors-list">
+                    <span class="distributor-tag">DistroKid</span>
+                    <span class="distributor-tag">TuneCore</span>
+                    <span class="distributor-tag">CD Baby</span>
+                    <span class="distributor-tag">Amuse</span>
+                    <span class="distributor-tag">UnitedMasters</span>
+                    <span class="distributor-tag">Believe Distribution</span>
+                    <span class="distributor-tag">ONErpm</span>
+                    <span class="distributor-tag">AWAL</span>
+                    <span class="distributor-tag">Stem</span>
+                    <span class="distributor-tag">Ditto Music</span>
+                    <span class="distributor-tag">RouteNote</span>
+                    <span class="distributor-tag">Spinnup</span>
+                    <span class="distributor-tag">iGroove</span>
+                    <span class="distributor-tag">Symphonic Distribution</span>
+                    <span class="distributor-tag">Empire Distribution</span>
+                    <span class="distributor-tag">Universal Music Group</span>
+                    <span class="distributor-tag">Sony Music</span>
+                    <span class="distributor-tag">Warner Music Group</span>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>© 2024 Spotify Distributor Finder | Made with ❤️</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
