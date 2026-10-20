@@ -72,10 +72,13 @@ async function fetchSpClientMetadata(trackId) {
         licensorUuid = data.album.licensor.uuid;
       }
 
+      console.log(`[spclient] Track ${trackId} - Licensor UUID: ${licensorUuid || 'NOT FOUND'}, Label: ${label || 'N/A'}`);
+
       return { label, licensorUuid, isrc };
 
     } catch (err) {
       const status = err.response?.status;
+      console.error(`[spclient] ERROR for ${trackId} - Status: ${status || 'N/A'}, Message: ${err.message}`);
       if ((status === 401 || status === 403) && attempt === 0) {
         invalidateToken();
         continue; // retry with fresh token

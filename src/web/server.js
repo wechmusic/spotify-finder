@@ -176,6 +176,11 @@ app.post("/api/check", async (req, res) => {
   }
 });
 
+// Serve the admin panel
+app.get("/admin.html", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "admin.html"));
+});
+
 // Serve the frontend
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
